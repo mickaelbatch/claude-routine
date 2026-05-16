@@ -29,6 +29,11 @@ Pour chaque message avec `reply_count > 0`, lis le thread avec `slack_read_threa
 Tu cherches : demandes de features, frictions, besoins clients remontés par CSMs/SEs/Customer Care.
 Ignore : bugs techniques isolés, questions config SDK, billing.
 
+Pour chaque message exploitable (ou thread exploitable), note le `ts` du message parent et construis son permalink Slack :
+`https://batchers.slack.com/archives/C0410AZ345C/p{ts_sans_point}`
+(ex. ts `1716912345.678901` → `p1716912345678901`)
+Ce permalink sera attaché aux besoins extraits de ce message dans le champ Sources du Registre.
+
 **En cas d'échec :** note ❌ Étape 1 dans le journal. C'est une étape critique — signale-le en tête du message Slack avec 🚨 et arrête le run.
 
 ---
@@ -73,6 +78,8 @@ Pour chaque conversation :
    - Le nom du client (via la requête 2)
    - La présence ou non du mot **"critical"** (case-insensitive) n'importe où dans la conversation
 4. Si aucun bloc "Note Productboard" → ignore la conversation
+5. Construis l'URL Intercom de la conversation : `https://app.intercom.com/a/apps/ekaza78m/conversations/{CONVERSATION_ID}`
+   Cette URL sera attachée aux besoins extraits de cette conversation dans le champ Sources du Registre.
 
 Ces signaux Intercom viennent s'ajouter aux signaux Slack de l'étape 1 pour le regroupement suivant.
 
@@ -86,7 +93,7 @@ Regroupe les signaux par besoin distinct. Ce qu'on compte : le **nombre de clien
 - Même client mentionné plusieurs fois pour le même besoin = 1 client
 - Normalise chaque besoin en phrase courte à l'infinitif
 
-Pour chaque groupe : nombre de clients distincts, liste des noms de clients, **un verbatim par client demandeur** (tous les verbatims, pas un seul global).
+Pour chaque groupe : nombre de clients distincts, liste des noms de clients, **un verbatim par client demandeur** (tous les verbatims, pas un seul global), et la **liste des URLs sources** (permalinks Slack + URLs Intercom) de tous les signaux ayant contribué à ce besoin.
 
 **En cas d'absence totale de signaux :** note ⚠️ Étape 2 — "Aucun signal identifié cette semaine". Continue jusqu'à l'étape 7 pour le signaler dans Notion et Slack.
 
@@ -154,8 +161,9 @@ Pour chaque besoin identifié :
    - `Verbatim` ← remplacer par la liste complète des verbatims de cette semaine, un par client demandeur (format : "**[Client]** : [verbatim]")
    - `Date dernière remontée` ← date d'aujourd'hui (run courant)
    - `Niveau max` ← niveau le plus élevé parmi tous les signaux de ce besoin cette semaine (Critical > Important > Nice to have). Ne pas écraser si la valeur existante est plus haute que celle de cette semaine.
+   - `Sources` ← fusionner les URLs sources de cette semaine avec celles déjà présentes (sans doublons), une URL par ligne
    - Ne pas toucher au Statut si "En roadmap" ou "Livré"
-3. **S'il est nouveau** → `notion-create-pages` avec toutes les propriétés, Statut = Actif, `Date dernière remontée` = aujourd'hui, `Niveau max` = niveau le plus élevé parmi les signaux de cette semaine (ou vide si aucun niveau renseigné)
+3. **S'il est nouveau** → `notion-create-pages` avec toutes les propriétés, Statut = Actif, `Date dernière remontée` = aujourd'hui, `Niveau max` = niveau le plus élevé parmi les signaux de cette semaine (ou vide si aucun niveau renseigné), `Sources` = liste des URLs sources de cette semaine (une par ligne)
 
 **En cas d'échec partiel :** note ⚠️ Étape 6 avec la liste des besoins non mis à jour. Continuer pour les autres.
 **En cas d'échec total :** note ❌ Étape 6. Signaler avec 🚨 dans le message Slack.
