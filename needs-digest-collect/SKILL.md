@@ -78,7 +78,7 @@ Pour chaque conversation :
    - Le nom du client (via la requête 2)
    - La présence ou non du mot **"critical"** (case-insensitive) n'importe où dans la conversation
 4. Si aucun bloc "Note Productboard" → ignore la conversation
-5. Note l'URL Intercom de la conversation : `https://app.intercom.com/a/inbox/conversations/{CONVERSATION_ID}`
+5. Construis l'URL Intercom de la conversation : `https://app.intercom.com/a/apps/ekaza78m/conversations/{CONVERSATION_ID}`
    Cette URL sera attachée aux besoins extraits de cette conversation dans le champ Sources du Registre.
 
 Ces signaux Intercom viennent s'ajouter aux signaux Slack de l'étape 1 pour le regroupement suivant.
