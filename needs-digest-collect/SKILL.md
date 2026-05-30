@@ -171,37 +171,32 @@ Pour chaque besoin identifié :
 
 ## Étape 7 — Message dans #team-pm
 
-Envoie sans demander confirmation dans #team-pm (ID : G01J0BZHWQL) :
+Envoie sans demander confirmation dans #team-pm (ID : G01J0BZHWQL) un brief de 30 secondes — pas un rapport.
 
 ```
 [🚨 Échecs critiques : Étape X, Étape Y — si applicable, sinon ne pas afficher cette ligne]
 
 📋 *Besoins clients — semaine du [DATE]*
-Source : #ask-product + Intercom | [N] besoins · [M] clients distincts
 
-⚠️ *À traiter en priorité*
-| # | Besoin | Catégorie | Clients | Clients demandeurs |
-|---|--------|-----------|---------|-------------------|
-[besoins avec au moins un signal critical — vide si aucun]
+🔴 *Bloquant*
+• [besoin] — [Client A], [Client B] `↑ nouveau`
 
-📋 *Autres besoins*
-| # | Besoin | Catégorie | Clients | Clients demandeurs |
-|---|--------|-----------|---------|-------------------|
-[reste des besoins]
+📈 *En montée*
+• [besoin] — [Client C] `↻ récurrent`
+• [besoin] — [Client D], [Client E] `↑ nouveau`
 
-🔗 [lien Notion vers la page digest]
-
----
-*Rapport d'exécution :*
-✅ Étape 1 — #ask-product : X messages, Y threads lus
-[✅ / ⚠️ / ❌] Étape 1b — Intercom : [résumé ou cause d'échec]
-✅ Étape 2 — Z besoins identifiés
-✅ Étape 3-4 — Catégorisation et classement OK
-[✅ / ❌] Étape 5 — Page Notion créée
-[✅ / ⚠️ / ❌] Étape 6 — Registre mis à jour
+→ Digest semaine : [lien Notion vers la page créée à l'étape 5]
+→ Tableau complet : https://app.notion.com/p/batchers/f91db26a03064283af6eac6ed1a59592?v=5ab90515bbd1492b8bbda69fb0aa99a8
 ```
 
-Si le bloc "À traiter en priorité" est vide, ne pas l'afficher.
+Règles de rédaction :
+- 5 bullets maximum au total, répartis entre les deux groupes selon ce qui émerge
+- 🔴 Bloquant = besoins avec au moins un signal critical (migration bloquée, deal en risque, onboarding cassé)
+- 📈 En montée = signaux récurrents ou émergents à fort volume
+- Chaque bullet : besoin + 1-2 clients concrets en une ligne
+- `↑ nouveau` si apparu pour la première fois cette semaine, `↻ récurrent` s'il est déjà dans le registre
+- Si 🔴 Bloquant est vide cette semaine, ne pas afficher ce groupe
+- Uniquement les besoins à fort assurance (plusieurs sources concordantes ou volume significatif)
 
 **En cas d'échec d'envoi :** c'est une étape critique — l'information doit absolument parvenir à Mickaël. Si le message Slack échoue, créer quand même la page Notion (si pas déjà fait) et noter l'échec dans la page.
 
